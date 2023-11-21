@@ -1,4 +1,4 @@
-let contatos = []
+let lista = []
 
 function adicionarContato(novoContato) {
   // Verificar se usuário já existe, caso exista return
@@ -9,11 +9,11 @@ function adicionarContato(novoContato) {
     return
   }
 
-  contatos.unshift(novoContato)
+  lista.unshift(novoContato)
 }
 
 function verificarSeContatoExiste(idContato) {
-  return contatos.find(contato => contato.id === idContato)
+  return lista.find(contato => contato.id === idContato)
 }
 
 function apagarContatoPeloId(contatoId) {
@@ -24,7 +24,7 @@ function apagarContatoPeloId(contatoId) {
     return
   }
 
-  contatos = contatos.filter(contato => contato.id !== contatoId)
+  lista = lista.filter(contato => contato.id !== contatoId)
 }
 
 function imprimirContato(contato) {
@@ -32,14 +32,14 @@ function imprimirContato(contato) {
 }
 
 function editarContatoById(idContato, novoContato) {
-  const contatoIndex = contatos.findIndex(contato => contato.id === idContato);
+  const contatoIndex = lista.findIndex(contato => contato.id === idContato);
 
   if (contatoIndex === -1) {
   console.log("O contato que você está tentando editar não existe");
   return;
   }
 
-  contatos[contatoIndex] = novoContato;
+  lista[contatoIndex] = novoContato;
 }
 
 function mostrarContatoById(idContato) {
@@ -53,21 +53,21 @@ function mostrarContatoById(idContato) {
   imprimirContato(contato)
 }
 
-function listarContatos() {
-  let lista = ""
+function listarlista() {
+  let lista2 = ""
 
-  contatos.map(contato => lista.concat(imprimirContato(contato)))
+  lista.map(contato => lista2.concat(imprimirContato(contato)))
 
-  return lista
+  return lista2
 }
 
-export {
-  contatos,
+module.exports = {
+  lista,
   adicionarContato,
   verificarSeContatoExiste,
   apagarContatoPeloId,
   imprimirContato,
   editarContatoById,
   mostrarContatoById,
-  listarContatos
+  listarlista
 }

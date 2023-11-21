@@ -1,59 +1,48 @@
-import {
-  contatos,
-  adicionarContato,
-  listarContatos,
-  mostrarContatoById
-} from './contatos.js'
+const contatos = require("./contatos.js")
 
-const opcoesValidas = [1, 2, 3, 4, 5]
+const prompt = require('prompt-sync')({ sigint: true });
 
-function solicitarOpcaoUsuario() {
-  const input = Number(prompt(`
-    Escolha uma opção:
+while (true) {
+
+  let input = Number(prompt(`
+  Escolha uma opção:
 
     1 - Listar todas os contatos
     2 - Exibir um contato
     3 - Adicionar um contato
     4 - Editar um contato
     5 - Remover um contato
-  `))
 
-  return input
-}
+    0 - Sair \n
+  Opção: `))
 
-function start() {
-  const opcao = solicitarOpcaoUsuario()
-
-  switch (opcao) {
+  switch (input) {
     case 1:
-      const lista = listarContatos()
-
-      if (!lista) {
-        alert("Lista de contatos vazia")
-      } else {
-        alert(lista)
-      }
-
-      start()
+      console.log("Contatos: ")
+      console.log(contatos.lista)
       break
     case 2:
-      if (contatos.length <= 0) {
-        alert("Lista de contatos vazia")
-        start()
-        break
-      }
-
-      const idContato = prompt("Informe o ID do usuário")
-
-      mostrarContatoById(idContato)
-
-      start()
-      break 
-    default:
-      alert("Opção inválida")
-      start()
+      console.log("Exibir um contato")
       break
+    case 3:
+      console.log("Adicionar um contato")
+      contatos.adicionarContato({
+        nome: prompt("Nome: "),
+        email: prompt("Email: "),
+        telefone: prompt("Telefone: ")
+      })
+      break
+    case 4:
+      console.log("Editar um contato")
+      break
+    case 5:
+      console.log("Remover um contato")
+      break
+    case 0:
+      process.exit(0);
+      break
+    default:
+      console.log("Opcão inválida")
   }
-}
 
-start()
+}
