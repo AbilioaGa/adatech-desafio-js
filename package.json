@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "prompt-sync": "^4.2.0"
+    "uuid": "^9.0.1"
   }
 }
