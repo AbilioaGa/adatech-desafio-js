@@ -65,7 +65,7 @@ function excluirContato(id) {
 }
 
 function handleAdicionarContato(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   const nome = event.target.elements[0].value;
   const email = event.target.elements[1].value;
@@ -81,7 +81,7 @@ function handleAdicionarContato(event) {
 }
 
 function handleEditarContato(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   const nome = event.target.elements[0].value;
   const email = event.target.elements[1].value;
