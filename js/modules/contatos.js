@@ -1,102 +1,89 @@
-let lista = [
-  {
-    id: new Date().getDate() + Math.floor(Math.random() * 9999999),
-    name: "Vinicius",
-    phone: '19997820000',
-    email: 'vinicius@email.com'
-  },
-  {
-    id: new Date().getDate() + Math.floor(Math.random() * 9999999),
-    name: "Lucas",
-    phone: '19996011111',
-    email: 'lucas@email.com'
-  },
-  {
-    id: new Date().getDate() + Math.floor(Math.random() * 9999999),
-    name: "Sabrina",
-    phone: '19984141414',
-    email: 'sabrina@email.com'
-  }
-]
+
+let lista = JSON.parse(localStorage.getItem("contatos")) || [];
+
+function mostrarModalContatoExistente() {
+  document.getElementById("botao-contato-existente").click();
+}
 
 function adicionarContato(nome, email, telefone) {
-
   let contato = {
     id: new Date().getDate() + Math.floor(Math.random() * 9999999),
     name: nome,
     email: email,
-    phone: telefone
-  }
+    phone: telefone,
+  };
 
-  // Verificar se usuário já existe, caso exista return
-  const novoContatoJaExiste = verificarSeContatoExiste(contato)
+  // Verificar se o usuário já existe, caso exista, retornar
+  const novoContatoJaExiste = verificarSeContatoExiste(contato);
 
   if (novoContatoJaExiste) {
-    console.log("Usuário já cadastrado")
-    return
+    mostrarModalContatoExistente();
+    return;
   }
 
-  lista.unshift(contato)
+  lista.unshift(contato);
+  salvarListaNoLocalStorage();
 
-  console.log(lista)
+  console.log(lista);
 }
 
 function verificarSeContatoExiste(contato) {
-  return lista.some(item => item.name === contato.name && item.email === contato.email && item.phone === contato.phone)
+  return lista.some(
+    (item) => item.name === contato.name && item.email === contato.email && item.phone === contato.phone
+  );
 }
 
 function apagarContatoPeloId(contatoId) {
-  // const contatoExiste = verificarSeContatoExiste(contatoId)
-
-  // if (!contatoExiste) {
-  //   console.log("O contato que você está tentando excluir não existe")
-  //   return
-  // }
-
-  lista = lista.filter(contato => contato.id !== contatoId)
+  lista = lista.filter((contato) => contato.id !== contatoId);
+  salvarListaNoLocalStorage();
 }
 
 function imprimirContato(contato) {
-  return `ID: ${contato.id} - Nome: ${contato.nome}`
+  return `ID: ${contato.id} - Nome: ${contato.name}`;
 }
 
 function editarContatoById(idContato, novoContato) {
-  const contatoIndex = lista.findIndex(contato => contato.id == idContato);
+  const contatoIndex = lista.findIndex((contato) => contato.id === Number(idContato));
 
   if (contatoIndex === -1) {
-  console.log("O contato que você está tentando editar não existe");
-  return;
+    console.log("O contato que você está tentando editar não existe");
+    return;
   }
 
   lista[contatoIndex] = novoContato;
+  salvarListaNoLocalStorage();
 }
 
 function mostrarContatoById(idContato) {
-  const contato = verificarSeContatoExiste(idContato)
+  const contato = lista.find((contato) => contato.id === idContato);
 
   if (!contato) {
-    alert("Usuário não cadastrado")
-    return
+    alert("Usuário não cadastrado");
+    return;
   }
 
-  imprimirContato(contato)
+  imprimirContato(contato);
 }
 
 function listarlista() {
-  let lista2 = ""
+  let lista2 = "";
 
-  lista.map(contato => lista2.concat(imprimirContato(contato)))
+  lista.map((contato) => lista2.concat(imprimirContato(contato)));
 
-  return lista2
+  return lista2;
+}
+
+function salvarListaNoLocalStorage() {
+  localStorage.setItem("contatos", JSON.stringify(lista));
 }
 
 export {
-  lista,
   adicionarContato,
-  verificarSeContatoExiste,
   apagarContatoPeloId,
-  imprimirContato,
   editarContatoById,
+  imprimirContato,
+  lista,
+  listarlista,
   mostrarContatoById,
-  listarlista
-}
+  verificarSeContatoExiste,
+};
